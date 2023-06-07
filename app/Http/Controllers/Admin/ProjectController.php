@@ -53,7 +53,7 @@ class ProjectController extends Controller
 
         $project->update($data);
 
-        return redirect()->route('admin.projects.index')->with('message', 'Project updated successfully.');
+        return redirect()->route('admin.projects.show', $project->slug);
     }
 
     public function destroy(Project $project)

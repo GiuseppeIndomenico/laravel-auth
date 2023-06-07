@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -20,17 +22,16 @@ class ProjectController extends Controller
         return view('admin.projects.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        $data = $request->validated();
+        $slug = Str::slug($data['title'], '-');
+        $data['slug'] = $slug;
+        $project = Project::create($data);
 
-        Project::create($data);
-
-        return redirect()->route('admin.projects.index')->with('message', 'Project created successfully.');
+        return redirect()->route('admin.projects.show', $project->slug);
     }
+
 
     public function show(Project $project)
     {
@@ -52,7 +53,7 @@ class ProjectController extends Controller
 
         $project->update($data);
 
-        return redirect()->route('projects.index')->with('message', 'Project updated successfully.');
+        return redirect()->route('admin.projects.index')->with('message', 'Project updated successfully.');
     }
 
     public function destroy(Project $project)

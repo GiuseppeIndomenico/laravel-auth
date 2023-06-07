@@ -29,7 +29,7 @@
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->description }}</td>
                         <td>
-                            <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-outline-primary">
+                            <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-outline-primary">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
                             <button class="btn btn-outline-danger">

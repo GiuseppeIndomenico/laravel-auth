@@ -32,10 +32,15 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
     }
 
-    public function show(Project $project)
+    public function show($id)
     {
+        // Logica per recuperare il progetto dal database
+        $project = Project::findOrFail($id);
+
+        // Restituisci la vista show.blade.php con il progetto
         return view('admin.projects.show', compact('project'));
     }
+
 
     public function edit(Project $project)
     {

@@ -21,13 +21,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::middleware('auth', 'verified')->name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-
+    Route::resource('projects', ProjectController::class);
 });
 
-Route::resource('admin.projects', ProjectController::class);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

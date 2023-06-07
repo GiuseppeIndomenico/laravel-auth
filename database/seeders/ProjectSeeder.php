@@ -4,32 +4,40 @@ namespace Database\Seeders;
 
 use App\Models\Project;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProjectSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
     public function run()
     {
+        /** @var string[][] $projects */
         $projects = [
             [
-                'title' => 'Progetto 1',
-                'description' => 'Descrizione del progetto 1',
+                'title' => 'E-commerce Website',
+                'description' => 'Build a fully functional e-commerce website with shopping cart and payment integration.',
             ],
             [
-                'title' => 'Progetto 2',
-                'description' => 'Descrizione del progetto 2',
+                'title' => 'Mobile App Development',
+                'description' => 'Develop a cross-platform mobile app using React Native for iOS and Android devices.',
             ],
             [
-                'title' => 'Progetto 3',
-                'description' => 'Descrizione del progetto 3',
+                'title' => 'Data Analytics Dashboard',
+                'description' => 'Create an interactive data analytics dashboard to visualize and analyze complex data sets.',
             ],
             [
-                'title' => 'Progetto 4',
-                'description' => 'Descrizione del progetto 4',
+                'title' => 'Social Media Marketing Campaign',
+                'description' => 'Plan and execute a social media marketing campaign to increase brand awareness and engagement.',
             ],
-
         ];
 
         foreach ($projects as $projectData) {
+            $slug = Str::slug($projectData['title'], '-');
+            $projectData['slug'] = $slug;
             Project::create($projectData);
         }
     }

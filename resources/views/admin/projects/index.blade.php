@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <h1 class="display-1 text-center fw-semibold">I miei Progetti!</h1>
+        @if (session()->has('message'))
+            <div class="alert alert-success">{{ session()->get('message') }}</div>
+        @endif
 
+        <a class="btn btn-outline-success my-4" href="{{ route('admin.projects.create') }}">Aggiungi nuovo progetto</a>
 
         <table class="table table-dark table-striped">
             <thead>
@@ -29,12 +33,20 @@
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->description }}</td>
                         <td>
-                            <a href="{{ route('admin.projects.show', $project->slug) }}" class="btn btn-outline-primary">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <button class="btn btn-outline-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                            <div class="d-flex align-items-center justify-between">
+
+                                <a href="{{ route('admin.projects.show', $project->slug) }}"
+                                    class="btn btn-outline-primary mx-2">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <form method="POST" action="{{ route('admin.projects.destroy', $project->slug) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
 
 
@@ -43,6 +55,6 @@
             </tbody>
             @endforeach
         </table>
-
+        {{ $projects->links('pagination::bootstrap-5') }}
     </div>
 @endsection

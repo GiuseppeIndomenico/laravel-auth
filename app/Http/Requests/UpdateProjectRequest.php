@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use illuminate\Validation\Rule;
+use Illuminate\Validation\Rule;
+
+
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -31,7 +33,7 @@ class UpdateProjectRequest extends FormRequest
 
         ];
     }
-    public function meessages()
+    public function messages()
     {
         return [
 

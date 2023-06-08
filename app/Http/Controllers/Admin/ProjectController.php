@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -44,12 +46,11 @@ class ProjectController extends Controller
         return view('admin.projects.edit', compact('project'));
     }
 
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
+        $data = $request->validated();
+        $slug = Str::slug($data['title'], '-');
+        $data['slug'] = $slug;
 
         $project->update($data);
 
